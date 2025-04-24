@@ -1,11 +1,11 @@
 from typing import Any
 import httpx
 import os
-from mcp.server.fastmcp import FASTMCP
+from mcp.server.fastmcp import FastMCP
 
-mcp = FASTMCP()
+mcp = FastMCP()
 
-NWS_API_BASE = os.getenv("https://api.weather.gov")
+NWS_API_BASE = "https://api.weather.gov"
 USER_AGENT = "weather-app/1.0"
 
 
@@ -36,7 +36,7 @@ def format_alert(feature: dict) -> dict:
     }
 
 @mcp.tool()
-async def get_alerts(state: str) -> str:
+async def get_alerts(state: str) -> list[dict]:
     """Get weather alerts for a US state.
 
     Args:
@@ -46,12 +46,12 @@ async def get_alerts(state: str) -> str:
     data = await make_nws_request(url)
 
     if not data or "features" not in data:
-        return "Unable to fetch alerts or no alerts found."
+        return []  # or {"error": "Unable to fetch alerts or no alerts found."}
 
     if not data["features"]:
-        return "No active alerts for this state."
+        return []
 
     alerts = [format_alert(feature) for feature in data["features"]]
-    return "\n---\n".join(alerts)
+    return alerts
 
 
