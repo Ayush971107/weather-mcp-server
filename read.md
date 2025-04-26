@@ -1,1 +1,0 @@
-uv run mcp dev server/weather.py
