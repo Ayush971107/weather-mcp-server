@@ -8,7 +8,6 @@ mcp = FastMCP()
 NWS_API_BASE = "https://api.weather.gov"
 USER_AGENT = "weather-app/1.0"
 
-
 async def make_nws_request(url: str) -> dict[str, Any] | None:
     """Make a request to the NWS API with proper error handling."""
     headers = {
@@ -22,7 +21,6 @@ async def make_nws_request(url: str) -> dict[str, Any] | None:
             return response.json()
         except Exception:
             return None
-        
 
 def format_alert(feature: dict) -> dict:
     """Format an alert feature into a JSON/dict object."""
@@ -50,8 +48,10 @@ async def get_alerts(state: str) -> list[dict]:
 
     if not data["features"]:
         return []
-
     alerts = [format_alert(feature) for feature in data["features"]]
     return alerts
 
-
+@mcp.resource("echo://{message}")
+def echo_resource(message: str) -> str:
+    """Echo a message as a resource"""
+    return f"Resource echo: {message}"
