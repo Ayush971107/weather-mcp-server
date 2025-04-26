@@ -19,7 +19,7 @@ async def run_memory_chat():
     agent = MCPAgent(
         llm=llm,
         client=client,
-        max_steps=15,
+        max_steps=15
         memory_enabled=True,  # Enable built-in conversation memory
     )
 
