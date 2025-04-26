@@ -6,7 +6,9 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "dotenv>=0.9.9",
+    "fastembed>=0.6.1",
     "langchain-openai>=0.3.14",
     "mcp-use>=1.2.8",
     "mcp[cli]>=1.6.0",
+    "pydantic>=2.11.3",
 ]
